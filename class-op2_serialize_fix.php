@@ -150,8 +150,6 @@ class Op_Serialize_Fix {
             $data
         );
 
-        echo '<pre>'.$output.'</pre>';
-
         $wpdb->update(
             $wpdb->prefix . 'postmeta',
             array(
