@@ -3,7 +3,7 @@
  * Plugin Name: OptimizePress Serialize Fix
  * Plugin URI:  www.optimizepress.com
  * Description: Fixes corrupt OptimizePress settings that happen in rare cases after migrating OP site
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      OptimizePress
  * Author URI:  www.optimizepress.com
  */
