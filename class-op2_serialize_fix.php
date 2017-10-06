@@ -132,7 +132,7 @@ class Op_Serialize_Fix {
         foreach ($opSettings as $setting) {
             // we first look for s:1:"1"; problem and fix that
             if ($setting->meta_key == '_optimizepress_theme' && $setting->meta_value == 's:1:"1";') {
-                $this->fixTheme($setting->meta_value, $setting->meta_id);
+                $this->fix($setting->meta_value, $setting->meta_id);
             }
             if (!empty($setting->meta_value)) {
                 $this->fix($setting->meta_value, $setting->meta_id);
@@ -142,7 +142,7 @@ class Op_Serialize_Fix {
         return '';
     }
 
-    public function fixTheme($data, $metaId)
+    public function fixTheme($metaId)
     {
         global $wpdb;
 
@@ -164,6 +164,24 @@ class Op_Serialize_Fix {
     public function fix($data, $metaId)
     {
         global $wpdb;
+
+        if ($data == 's:1:"1";') {
+            $output = 's:51:"a:2:{s:4:"type";s:9:"marketing";s:3:"dir";s:1:"1";}";';
+
+            $wpdb->update(
+                $wpdb->prefix . 'postmeta',
+                array(
+                    'meta_value' => $output
+                ),
+                array( 'meta_id' => $metaId ),
+                array(
+                    '%s'
+                ),
+                array( '%d' )
+            );
+
+            $data = $output;
+        }
 
         $output = preg_replace_callback(
             '/^(s:)(\d+)(:)(")(.*)(")(.*)$/',
